@@ -7,27 +7,16 @@ const OrderSchema = mongoose.Schema({
 		type: ObjectId,
 		ref: "User"
 	},
-	cartItems: {
+	orderItems: {
 		type: Array,
 		default: []
 	},
-	addressOne: {
-		type: String
-	},
-	addressTwo: {
-		type: String
-	},
-	total: {
-		type: Number
-	},
-	paymentId: {
-		type: Number,
-	},
-	paymentMethod: {
-		type: String
+	orderStatus: {
+		type:String,
+		enum:["pending","accepted","delivered","cancel"],
+		default:"pending",
 	},
 	DateOfPurchase: Date,
-	orderStatus: String,
 
 }, {
 	timestamps: true

@@ -10,6 +10,7 @@ const orderRoute = require('./routes/v1/order.route');
 
 // user login 
 const userLoginRoute = require('./routes/v1/userLogin.route');
+const userOrderInfoRoute = require('./routes/v1/userOrderInfo.route');
 
 
 app.use(cors());
@@ -33,7 +34,8 @@ app.use("/api/v1/product/cart",cartRoute);
 // product add wishlist
 // app.use("/api/v1/product/wishlist");
 // product order
-app.use("/api/v1/order/",orderRoute);
+app.use("/api/v1/order-info",userOrderInfoRoute);
+app.use("/api/v1/order-submitted",orderRoute);
 
 
 

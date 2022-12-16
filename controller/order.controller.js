@@ -1,3 +1,5 @@
+const Order = require("../model/order.model")
+const User = require("../model/user.model")
 const { getAllOrdersService, getOrderByIdService, createOrderService, deleteOrderService } = require("../service/order.service")
 
 // get all order 
@@ -34,17 +36,33 @@ module.exports.getOrderById = async (req, res, next) => {
 }
 // create order by id 
 module.exports.createOrder = async (req, res, next) => {
-	
+
 	try {
-		const data = req.body;
+		// const data = req.body;
 		const userId = req?.user?.id;
-		const result = await createOrderService({...data,userId})
+		const cartProduct = await User.findOne({ _id: userId });
+		if (!cartProduct || cartProduct.length < 1) {
+			return res.status(400).json({ status: false, message: "Request failed !" });
+		} else {
+			// const userId = cartProduct._id;
+			const orderItems = cartProduct.cartItems;
 
+			const order = await Order.create({ userId, orderItems });
+			if (!order || order.length < 1) {
+				return res.status(400).json({ status: false, message: "Request failed !" });
 
-		if (!result || result.length < 1) {
-			return res.status(404).json({ status: false, message: "order failed" })
+			} else {
+				const deleteCart = await User.updateOne({ _id: userId }, { $set: { cartItems: [] } });
+				if (!deleteCart || deleteCart.length < 1) {
+					return res.status(400).json({ status: false, message: "Request failed !" });
+
+				} else {
+					res.status(200).json({ status: true, message: "Your Order has been confirmed" });
+
+				}
+			}
+
 		}
-		res.status(200).json({ status: true,message:"order submitted", order: result })
 
 	} catch (error) {
 		next(error)
