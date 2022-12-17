@@ -11,7 +11,7 @@ module.exports.addToCartService = async (userId, productInfo) => {
 }
 // user get all carts
 module.exports.userGetCartService = async (userId) => {
-	const cart = await User.findOne({_id:userId}).populate("cartItems.productId");
+	const cart = await User.findOne({_id:userId}).populate("cartItems.productId")
 	return cart
 }
 // delete to cart 
@@ -36,12 +36,3 @@ module.exports.deleteFullCartService = async (userId) => {
 
 
 }
-// get cart for dashboard by email
-// module.exports. getCartForUserDashBoardByEmailService = async (email) => {
-// console.log("email is",email);
-// 	const result = await User.findOne({email:email}).select("cartItems")//.populate("cartItems.productId")
-// 	console.log("result",result);
-// 	return result;
-
-
-// }

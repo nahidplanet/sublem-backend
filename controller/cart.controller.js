@@ -52,7 +52,7 @@ module.exports.addToCartFromProductDetails = async (req, res, next) => {
 
 
 
-// decreament a item from cart 
+// decrement a item from cart 
 module.exports.decrementOneItemFromCart = async (req, res, next) => {
 	
 	try {
@@ -106,8 +106,7 @@ module.exports.deleteToCart = async (req, res, next) => {
 			return res.status(400).json({ status: false, message: "product deleted failed" })
 		}
 	} catch (error) {
-		// next(error)
-		res.json({ error: error.message })
+		next(error)
 	}
 }
 

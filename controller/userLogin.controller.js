@@ -2,7 +2,6 @@ const { createUserService } = require("../service/userLoginService");
 const { token } = require("../utils/createToken");
 
 module.exports.createUser = async (req, res, next) => {
-console.log("user login controllers",req.headers);
 	try {
 		const result = await createUserService(req.body);
 		

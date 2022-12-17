@@ -2,8 +2,6 @@
 
 const mongoose = require('mongoose');
 const validator = require('validator');
-const bcryptjs = require('bcryptjs');
-const crypto = require('crypto');
 const { ObjectId } = mongoose.Schema.Types
 
 const userSchema = mongoose.Schema({
@@ -44,7 +42,7 @@ const userSchema = mongoose.Schema({
 			productId: {
 				type: ObjectId,
 				ref: "Product",
-				required:[true,"productId is required"]
+				required: [true, "productId is required"]
 			},
 			price: {
 				type: Number,
@@ -57,10 +55,14 @@ const userSchema = mongoose.Schema({
 		}
 	],
 
-	wishlist: {
-		type: Array,
-		default: []
-	},
+	wishlist: [
+		{
+			productId: {
+				type: ObjectId,
+				ref: "Product"
+			}
+		}
+	],
 	username: {
 		type: String,
 		minLength: [3, 'your user name must be at least 3 characters'],

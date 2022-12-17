@@ -11,6 +11,7 @@ const userLoginRoute = require('./routes/v1/userLogin.route');
 const userOrderInfoRoute = require('./routes/v1/userOrderInfo.route');
 const adminRoute = require('./routes/v1/adminLogin.route');
 const allUserRoute = require('./routes/v1/allUser.route');
+const wishlistRoute = require('./routes/v1/wishlist.route');
 
 
 app.use(cors());
@@ -40,6 +41,7 @@ app.use("/api/v1/create-user",userLoginRoute);
 
 app.use("/api/v1/product/",productRoute);
 app.use("/api/v1/product/cart",cartRoute);
+app.use("/api/v1/product/wishlist",wishlistRoute);
 app.use("/api/v1/order-info",userOrderInfoRoute);
 app.use("/api/v1/order-submitted",orderRoute);
 
