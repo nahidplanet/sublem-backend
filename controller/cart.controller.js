@@ -3,22 +3,23 @@ const User = require("../model/user.model");
 const { deleteToCartService, deleteFullCartService, userGetCartService ,getCartForUserDashBoardByEmailService} = require("../service/cart.service")
 
 
-// add to cart 
+// add to cart from single product page and cart page
 module.exports.addToCart = async (req, res, next) => {
+ const {productId, price, quantity } = req.body;
+//  console.log(productId, price, quantity );
 
 	try {
 		const userId = req.user.id;
-		const cartItems = req.body;
 		const user = await User.find({ _id: userId });
 		if (!user || user.length < 1) {
 			return res.status(400).json({ status: false, message: "Invalid User", error: "user not find by id" });
 		} else {
-			const abc = await User.findOne({ "cartItems.productId": { $in: [req.body.productId] } })
+			const abc = await User.findOne({ "cartItems.productId": { $in: [productId] } })
 			if (!abc) {
-				const result = await User.updateOne({ _id: userId }, { $push: { cartItems: { productId: req.body.productId, price: req.body.price, quantity: req.body.quantity } } })
+				const result = await User.updateOne({ _id: userId }, { $push: { cartItems: { productId, price, quantity} } })
 				return res.status(200).json({ status: true, message: "new Product add" });
 			} else {
-				const increase = await User.updateOne({ "cartItems.productId": { $in: [req.body.productId] } }, { $inc: { "cartItems.$.quantity": 1 } })
+				const increase = await User.updateOne({ "cartItems.productId": { $in: [productId] } }, { $inc: { "cartItems.$.quantity": 1 } })
 				return res.status(200).json({ status: true, message: "product increase" });
 			}
 		}
@@ -26,6 +27,28 @@ module.exports.addToCart = async (req, res, next) => {
 		next(error)
 	}
 }
+// add to cart  from view single product details
+module.exports.addToCartFromProductDetails = async (req, res, next) => {
+ const {productId, price, quantity } = req.body;
+
+	try {
+		const userId = req.user.id;
+		const user = await User.find({ _id: userId });
+
+
+		if (!user || user.length < 1) {
+			return res.status(400).json({ status: false, message: "Invalid User", error: "user not find by id" });
+		} else {
+			const result = await User.updateOne({ _id: userId }, { $push: { cartItems: { productId, price, quantity} } })
+			 res.status(200).json({ status: true, message: "Product added" });
+			
+		}
+	} catch (error) {
+		next(error)
+	}
+}
+
+
 
 
 

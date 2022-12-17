@@ -1,10 +1,18 @@
-const Order = require("../model/order.model")
+const Order = require("../model/order.model");
 
 
 
-module.exports.getAllOrdersService = async () => {
-	const result = await Order.find() //.populate("userId");
-	return result;
+module.exports.getAllOrdersService = async (filters,queries) => {
+	// const cart = await User.findOne({_id:userId}).populate("cartItems.productId");
+		// return cart
+	const orders = await Order.find(filters).populate('orderItems.productId')
+	.skip(queries.skip)
+	.limit(queries.limit)
+
+	const totalProduct = await Order.countDocuments(filters);
+	const totalPage = Math.ceil(totalProduct / queries.limit)
+	return { totalPage, totalProduct, orders };
+
 }
 
 // get order by id 

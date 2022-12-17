@@ -6,7 +6,7 @@ const orderRoute = express.Router()
 
 
 orderRoute.route("/")
-	.get(verifyToken,   getAllOrders)
+	.get(getAllOrders)
 	.post(verifyToken,createOrder)
 	.delete(verifyToken,   deleteOrder)
 

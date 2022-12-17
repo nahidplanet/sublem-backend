@@ -4,13 +4,50 @@ const { getAllOrdersService, getOrderByIdService, createOrderService, deleteOrde
 
 // get all order 
 module.exports.getAllOrders = async (req, res, next) => {
+console.log("ssssss",req.query);
 	try {
+		// step 0: copy the query ;
+		let filters = { ...req.query };
+		const queries = {};
+		const excludeFields = ['sort', 'page', 'limit', "field", "price"]
+		excludeFields.forEach(field => delete filters[field]);
 
-		const result = await getAllOrdersService()
+		let filterString = JSON.stringify(filters);
+		filterString = filterString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
+		filters = JSON.parse(filterString);
+
+		if (req.query.sort) {
+			const sortBy = req.query.sort.split(',').join(' ');
+			queries.sortBy = sortBy;
+		}
+
+		if (req.query.field) {
+			const fieldBy = req.query.field.split(',').join(' ');
+			queries.field = fieldBy;
+		}
+
+		if (req.query.category) {
+			const categoryBy = req.query.category.split(',').join(' ');
+			queries.category = categoryBy;
+		}
+
+		if (req.query.page || req.query.limit) {
+
+			//{{URL}}/product?sort=price,-name&field=name,price,-_id&category=home&page=2&limit=10
+			const { page = 1, limit = 10 } = req.query;
+			const skip = (page - 1) * parseInt(limit)
+
+
+
+			queries.skip = skip;
+			queries.limit = parseInt(limit);
+		}
+
+		const result = await getAllOrdersService(filters, queries)
 		if (!result || result.length < 1) {
 			return res.status(404).json({ status: false, message: "no order found" })
 		}
-		res.status(200).json({ status: true, order: result })
+		res.status(200).json({ status: true, orders: result })
 
 	} catch (error) {
 		next(error)

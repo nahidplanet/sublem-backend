@@ -10,6 +10,7 @@ const orderRoute = require('./routes/v1/order.route');
 const userLoginRoute = require('./routes/v1/userLogin.route');
 const userOrderInfoRoute = require('./routes/v1/userOrderInfo.route');
 const adminRoute = require('./routes/v1/adminLogin.route');
+const allUserRoute = require('./routes/v1/allUser.route');
 
 
 app.use(cors());
@@ -18,9 +19,11 @@ app.use(express.static("public"));
 
 
 //* =======================================
-// admin Login
+// admin Login and access
 // ======================================= 
 app.use("/api/v1/admin-login",adminRoute);
+app.use("/api/v1/receive-all-order",orderRoute);
+app.use("/api/v1/all-users",allUserRoute);
 
 
 
