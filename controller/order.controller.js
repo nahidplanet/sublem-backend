@@ -1,10 +1,10 @@
 const Order = require("../model/order.model")
 const User = require("../model/user.model")
-const { getAllOrdersService, getOrderByIdService, createOrderService, deleteOrderService } = require("../service/order.service")
+const { getAllOrdersService, getOrderByIdService, createOrderService, deleteOrderService, updateOrderStatusByAdminService } = require("../service/order.service")
 
 // get all order 
 module.exports.getAllOrders = async (req, res, next) => {
-console.log("ssssss",req.query);
+
 	try {
 		// step 0: copy the query ;
 		let filters = { ...req.query };
@@ -105,10 +105,26 @@ module.exports.createOrder = async (req, res, next) => {
 		next(error)
 	}
 }
+// order status update
+module.exports.updateOrderStatusByAdmin = async (req, res, next) => {
+	try {
+		const {id,status} =req.query;
+		const result = await updateOrderStatusByAdminService(id,status)
+
+
+		if (!result ) {
+			return res.status(400).json({ status: false, message: "Status Updated Failed" })
+		}else{
+
+			res.status(200).json({ status: true, message:"Status Updated" })
+		}
+
+	} catch (error) {
+		next(error)
+	}
+}
 // delete order by id 
 module.exports.deleteOrder = async (req, res, next) => {
-
-
 	try {
 		const data = req.body;
 		const userId = req?.user?.id;

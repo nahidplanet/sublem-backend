@@ -12,11 +12,7 @@ module.exports.addWishlistByUserService = async (userId) => {
 	return user
 }
 
-
-
 module.exports.deleteWishlistByUserService = async (userId, productId) => {
-	console.log(userId);
-	const result = await User.updateOne({ _id: userId },{ $pull: { wishlist: { productId: productId } } });
-	console.log(result);
+	const result = await User.updateOne({ _id: userId }, { $pull: { wishlist: { productId: productId } } });
 	return result;
 }
