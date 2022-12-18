@@ -3,9 +3,6 @@ const Order = require("../model/order.model");
 
 
 module.exports.getAllOrdersService = async (filters, queries) => {
-	// const cart = await User.findOne({_id:userId}).populate("cartItems.productId");
-	// return cart
-	// console.log("filters",filters);
 	const orders = await Order.find(filters).populate("userId").populate({ path: "orderItems.productId", model: "Product" })
 		.skip(queries.skip)
 		.limit(queries.limit)
@@ -29,7 +26,12 @@ module.exports.createOrderService = async (data) => {
 }
 // update order Status by id 
 module.exports.updateOrderStatusByAdminService = async (id, status) => {
-	const result = Order.updateOne({ _id: id }, { orderStatus: status });
+	const result = await Order.updateOne({ _id: id }, { orderStatus: status });
+	return result;
+}
+// user order list dashboard by id 
+module.exports.getAllOrdersByUserService = async (id) => {
+	const result = await Order.find({userId:id}).populate({path:"orderItems.productId", model:"Product"});
 	return result;
 }
 

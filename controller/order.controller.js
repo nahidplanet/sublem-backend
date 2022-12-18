@@ -1,6 +1,6 @@
 const Order = require("../model/order.model")
 const User = require("../model/user.model")
-const { getAllOrdersService, getOrderByIdService, createOrderService, deleteOrderService, updateOrderStatusByAdminService } = require("../service/order.service")
+const { getAllOrdersService, getOrderByIdService, createOrderService, deleteOrderService, updateOrderStatusByAdminService, getAllOrdersByUserService } = require("../service/order.service")
 
 // get all order 
 module.exports.getAllOrders = async (req, res, next) => {
@@ -129,6 +129,22 @@ module.exports.deleteOrder = async (req, res, next) => {
 		const data = req.body;
 		const userId = req?.user?.id;
 		const result = await deleteOrderService(userId)
+
+
+		if (!result || result.length < 1) {
+			return res.status(404).json({ status: false, message: "no order found" })
+		}
+		res.status(200).json({ status: true, order: result })
+
+	} catch (error) {
+		next(error)
+	}
+}
+// user order by id 
+module.exports.getAllOrdersByUser = async (req, res, next) => {
+	try {
+		const userId = req?.user?.id;
+		const result = await getAllOrdersByUserService(userId)
 
 
 		if (!result || result.length < 1) {

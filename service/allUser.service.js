@@ -9,8 +9,8 @@ module.exports.getAllUserByAdminService = async (filters, queries) => {
 	const totalPage = Math.ceil(totalUser / queries.limit)
 	return { totalPage, totalUser, users };
 }
-module.exports.userDeleteByAdminService = async (userId) => {
-	const result = await User.deleteOne({ _id: userId })
+module.exports.userUpdateRoleByAdminService = async (userId,role) => {
+	const result = await User.updateOne({ _id: userId },{role:role})
 	return result;
 }
 // user dashboard 

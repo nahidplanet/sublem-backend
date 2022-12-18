@@ -6,7 +6,6 @@ const { deleteToCartService, deleteFullCartService, userGetCartService ,getCartF
 // add to cart from single product page and cart page
 module.exports.addToCart = async (req, res, next) => {
  const {productId, price, quantity } = req.body;
-//  console.log(productId, price, quantity );
 
 	try {
 		const userId = req.user.id;

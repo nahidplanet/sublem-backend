@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllUserByAdmin, userDeleteByAdmin, getUserById } = require('../../controller/allUser.controller');
+const { getAllUserByAdmin, getUserById, userUpdateRoleByAdmin } = require('../../controller/allUser.controller');
 const { verifyToken } = require('../../middleware/verifyToken');
 
 const allUserRoute = express.Router()
@@ -13,5 +13,5 @@ allUserRoute.route("/dashboard/")
 
 
 allUserRoute.route("/:id")
-	.delete(userDeleteByAdmin)
+	.put(userUpdateRoleByAdmin)
 module.exports = allUserRoute;

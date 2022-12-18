@@ -7,7 +7,6 @@ module.exports.userOrderSubmit = async (req, res, next) => {
 	try {
 		const data = req.body;
 		const userId = req.user.id;
-		// console.log(userId);
 		const user = await User.findOne({ _id: userId })
 		if (!user || user.length < 1) {
 			res.status(400).json({ status: false, message: "Un-Authorize access" });

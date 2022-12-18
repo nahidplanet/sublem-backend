@@ -1,4 +1,4 @@
-const { getAllUserByAdminService, userDeleteByAdminService, getUserByIdService } = require("../service/allUser.service");
+const { getAllUserByAdminService, getUserByIdService, userUpdateRoleByAdminService } = require("../service/allUser.service");
 
 module.exports.getAllUserByAdmin = async (req,res,next)=>{
 	try {
@@ -51,17 +51,13 @@ module.exports.getAllUserByAdmin = async (req,res,next)=>{
 }
 
 
-
-
-
-
 // user delete by admin by id 
 
-module.exports.userDeleteByAdmin = async (req,res,next) =>{
+module.exports.userUpdateRoleByAdmin = async (req,res,next) =>{
 	try {
 		const userId = req.params.id;
-		console.log(userId);
-		const result = await userDeleteByAdminService(userId);
+		const role = req.query.role;
+		const result = await userUpdateRoleByAdminService(userId,role);
 		if (!result || result.length < 1) {
 			return res.status(400).json({status:false,message:"user delete failed!"})
 		}
