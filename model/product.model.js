@@ -99,23 +99,7 @@ const productSchema = mongoose.Schema({
 		enum: ["active", "deactivate"],
 		default: "active",
 		lowercase: true
-	},
-	quantity: {
-		type: Number,
-		required: [true, "product quantity is require"],
-		validate: {
-			validator: (value) => {
-				const isInteger = Number.isInteger(value)
-				if (isInteger) {
-					return true;
-				} else {
-					const toInteger = parseInt(value)
-					return toInteger;
-				}
-			},
-			message: "quantity must be a number"
-		}
-	},
+	}
 },
 	{
 		timestamps: true,

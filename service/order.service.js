@@ -34,6 +34,11 @@ module.exports.getAllOrdersByUserService = async (id) => {
 	const result = await Order.find({userId:id}).populate({path:"orderItems.productId", model:"Product"});
 	return result;
 }
+// delete Order by admin 
+module.exports.deleteOrderByIdService = async (id) => {
+	const result = await Order.deleteOne({_id:id});
+	return result;
+}
 
 
 

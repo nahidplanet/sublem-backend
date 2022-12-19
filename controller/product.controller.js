@@ -14,12 +14,12 @@ const {
 // get product all
 // =========================
 module.exports.getProducts = async (req, res, next) => {
-	
+
 	try {
 		// step 0: copy the query ;
 		let filters = { ...req.query };
 		const queries = {};
-		const excludeFields = ['sort', 'page', 'limit', "field", "price" ]
+		const excludeFields = ['sort', 'page', 'limit', "field", "price"]
 		excludeFields.forEach(field => delete filters[field]);
 
 		let filterString = JSON.stringify(filters);
@@ -62,8 +62,8 @@ module.exports.getProducts = async (req, res, next) => {
 		}
 		// if (req.query.price) {
 
-			// const priceBy = req.query.price.split(',').join(' ');
-			// queries.price = priceBy;
+		// const priceBy = req.query.price.split(',').join(' ');
+		// queries.price = priceBy;
 		// }
 
 
@@ -175,3 +175,4 @@ module.exports.deleteProductById = async (req, res, next) => {
 		next(error)
 	}
 }
+
