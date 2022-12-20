@@ -4,7 +4,7 @@ const {
 	getProductsService,
 	getProductByIdService,
 	updateProductByIdService,
-	deleteProductByIdService
+	deleteProductByIdService,
 } = require("../service/product.service")
 
 
@@ -16,55 +16,40 @@ const {
 module.exports.getProducts = async (req, res, next) => {
 
 	try {
-		// step 0: copy the query ;
 		let filters = { ...req.query };
 		const queries = {};
-		const excludeFields = ['sort', 'page', 'limit', "field", "price"]
+		const excludeFields = ['sort', 'page', 'limit', "field", "price", "search"]
 		excludeFields.forEach(field => delete filters[field]);
 
 		let filterString = JSON.stringify(filters);
 		filterString = filterString.replace(/\b(gt|gte|lt|lte|in)\b/g, match => `$${match}`);
 		filters = JSON.parse(filterString);
-		// step 1: create a empty string;
 
-
-		// step 2: sort multiple value ;
-		//{{URL}}/product?sort=stock,-name
 		if (req.query.sort) {
 			const sortBy = req.query.sort.split(',').join(' ');
 			queries.sortBy = sortBy;
 		}
-		// step 3: field (ki ki show korabo ba korabo na);
-		//{{URL}}/product?sort=stock,-name&field=name,price
 		if (req.query.field) {
 			const fieldBy = req.query.field.split(',').join(' ');
 			queries.field = fieldBy;
 		}
-		// step 4: field (ki ki show korabo ba korabo na);
-		//{{URL}}/product?sort=price,-name&field=name,price,-_id&category=home
 		if (req.query.category) {
 			const categoryBy = req.query.category.split(',').join(' ');
 			queries.category = categoryBy;
 		}
-
+		if (req.query.search) {
+			const searchBy = req.query.search.split(' ').join(' ');
+			queries.search = searchBy;
+		}
 		if (req.query.page || req.query.limit) {
-
 			//{{URL}}/product?sort=price,-name&field=name,price,-_id&category=home&page=2&limit=10
 			const { page = 1, limit = 10 } = req.query;
 			const skip = (page - 1) * parseInt(limit)
-
-
-
 			queries.skip = skip;
 			queries.limit = parseInt(limit);
-
-			// queries.price = priceBy;
 		}
-		// if (req.query.price) {
 
-		// const priceBy = req.query.price.split(',').join(' ');
-		// queries.price = priceBy;
-		// }
+
 
 
 
@@ -82,6 +67,8 @@ module.exports.getProducts = async (req, res, next) => {
 		next(error);
 	}
 }
+
+
 
 
 

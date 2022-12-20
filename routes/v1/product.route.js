@@ -7,7 +7,7 @@ const {
 	getProducts,
 	getProductById,
 	updateProductById,
-	deleteProductById
+	deleteProductById,
 } = require('../../controller/product.controller');
 
 const productRoute = express.Router()
@@ -27,5 +27,7 @@ productRoute.route("/:id")
 	// delete single product by id 
 	.delete(verifyToken, checkRole("admin", "editor"), deleteProductById)
 
-
+	
+	// get all product 
+	
 module.exports = productRoute;

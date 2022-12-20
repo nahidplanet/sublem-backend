@@ -12,6 +12,9 @@ const userOrderInfoRoute = require('./routes/v1/userOrderInfo.route');
 const adminRoute = require('./routes/v1/adminLogin.route');
 const allUserRoute = require('./routes/v1/allUser.route');
 const wishlistRoute = require('./routes/v1/wishlist.route');
+const searchRoute = require('./routes/v1/searchProduct.route');
+const addProductFreeRoute = require('./routes/v1/addProductFree.route');
+const sliderRoute = require('./routes/v1/slider.route');
 
 
 app.use(cors());
@@ -39,11 +42,15 @@ app.use("/api/v1/create-user",userLoginRoute);
 // product routes
 // =======================================
 
+app.use("/api/v1/search/",searchRoute);
 app.use("/api/v1/product/",productRoute);
+app.use("/api/v1/free",addProductFreeRoute);
 app.use("/api/v1/product/cart",cartRoute);
 app.use("/api/v1/product/wishlist",wishlistRoute);
 app.use("/api/v1/order-info",userOrderInfoRoute);
 app.use("/api/v1/order-submitted",orderRoute);
+app.use("/api/v1/slider",sliderRoute);
+// http://localhost:5000/api/v1/slider
 
 
 

@@ -2,6 +2,7 @@ const Product = require("../model/product.model")
 
 // get all product 
 module.exports.getProductsService = async (filters, queries) => {
+	
 	const products = await Product.find(filters)
 	.skip(queries.skip)
 	.limit(queries.limit)
@@ -10,6 +11,7 @@ module.exports.getProductsService = async (filters, queries) => {
 	const totalPage = Math.ceil(totalProduct / queries.limit)
 	return { totalPage, totalProduct, products };
 }
+
 
 
 

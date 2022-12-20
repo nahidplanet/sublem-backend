@@ -96,8 +96,8 @@ const productSchema = mongoose.Schema({
 	status: {
 		type: String,
 		required: [true, "product status is require"],
-		enum: ["active", "deactivate"],
-		default: "active",
+		enum: ["own", "free"],
+		default: "own",
 		lowercase: true
 	}
 },
