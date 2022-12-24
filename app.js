@@ -15,6 +15,7 @@ const wishlistRoute = require('./routes/v1/wishlist.route');
 const searchRoute = require('./routes/v1/searchProduct.route');
 const addProductFreeRoute = require('./routes/v1/addProductFree.route');
 const sliderRoute = require('./routes/v1/slider.route');
+const categoryAndLogoRoute = require('./routes/v1/logo.route');
 
 
 app.use(cors());
@@ -50,6 +51,7 @@ app.use("/api/v1/product/wishlist",wishlistRoute);
 app.use("/api/v1/order-info",userOrderInfoRoute);
 app.use("/api/v1/order-submitted",orderRoute);
 app.use("/api/v1/slider",sliderRoute);
+app.use("/api/v1/category-and-logo",categoryAndLogoRoute);
 // http://localhost:5000/api/v1/slider
 
 
