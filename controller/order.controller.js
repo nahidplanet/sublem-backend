@@ -1,6 +1,6 @@
 const Order = require("../model/order.model")
 const User = require("../model/user.model")
-const { getAllOrdersService, getOrderByIdService, createOrderService, deleteOrderService, updateOrderStatusByAdminService, getAllOrdersByUserService, deleteOrderByIdService } = require("../service/order.service")
+const { getAllOrdersService, getOrderByIdService,  deleteOrderService, updateOrderStatusByAdminService, getAllOrdersByUserService, deleteOrderByIdService } = require("../service/order.service")
 
 // get all order 
 module.exports.getAllOrders = async (req, res, next) => {
@@ -24,6 +24,10 @@ module.exports.getAllOrders = async (req, res, next) => {
 		if (req.query.field) {
 			const fieldBy = req.query.field.split(',').join(' ');
 			queries.field = fieldBy;
+		}
+		if (req.query.orderStatus) {
+			const StatusBy = req.query.orderStatus.split(',').join(' ');
+			queries.orderStatus = StatusBy;
 		}
 
 		if (req.query.category) {
