@@ -16,6 +16,7 @@ const searchRoute = require('./routes/v1/searchProduct.route');
 const addProductFreeRoute = require('./routes/v1/addProductFree.route');
 const sliderRoute = require('./routes/v1/slider.route');
 const socialLinkRoute = require('./routes/v1/socialLink.route');
+const verifyUserRoute = require('./routes/v1/verifyUser.route');
 
 
 app.use(cors());
@@ -26,6 +27,7 @@ app.use(express.static("public"));
 //* =======================================
 // admin Login and access
 // ======================================= 
+app.use("/api/v1/verifyToken",verifyUserRoute);
 app.use("/api/v1/admin-login",adminRoute);
 app.use("/api/v1/receive-all-order",orderRoute);
 app.use("/api/v1/all-users",allUserRoute);
