@@ -8,7 +8,7 @@ module.exports.token =  (user) => {
 		id: user._id,
 	}
 	const activeToken =  jwt.sign(payload, process.env.SECRET_KEY, {
-		expiresIn: '30d'
+		expiresIn: '10d'
 	});
 	return activeToken;
 }

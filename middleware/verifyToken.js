@@ -6,15 +6,25 @@ module.exports.verifyToken = async (req, res, next) => {
 	
 	try {
 		const token = req?.headers?.authorization?.split(" ")[1];
-		if (!token) {
-			return res.status(401).json({ status: false, message: "you are not logged in" })
-		}
-		const decode = await promisify(jwt.verify)(token, process.env.SECRET_KEY);
 		
-		req.user = decode;
-		next()
+		
+		if (token) {
+			return jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
+				if (err) {
+					return res.json({
+						status: false,
+						message: "Invalid Token Please Login",
+					});
+				}
+				req.user = decoded;
+				return next();
+			});
+		}else{
+
+			return res.unauthorized();
+		}
 	} catch (error) {
-		return res.status(403).json({ status: false, message: "Invalid token" })
+		next(error)
 
 	}
 }
