@@ -23,6 +23,7 @@ module.exports.getProductByIdService = async (id) => {
 
 // post single product by form-data
 module.exports.productCreateService = async (data) => {
+	
 	const result = await Product.create(data);
 	return result;
 

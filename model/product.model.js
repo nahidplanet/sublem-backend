@@ -87,7 +87,6 @@ const productSchema = mongoose.Schema({
 		{
 			productImagePath: {
 				type: String,
-				required: [true, "this is product image path...it's required."]
 			}
 
 		}

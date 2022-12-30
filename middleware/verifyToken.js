@@ -13,7 +13,7 @@ module.exports.verifyToken = async (req, res, next) => {
 				if (err) {
 					return res.json({
 						status: false,
-						message: "Invalid Token Please Login",
+						message: "Please Login First",
 					});
 				}
 				req.user = decoded;

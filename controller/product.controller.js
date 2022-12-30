@@ -97,6 +97,7 @@ module.exports.getProductById = async (req, res, next) => {
 // create products 
 // =============================
 module.exports.createProduct = async (req, res, next) => {
+	
 	if (req.files === undefined || req.files === [] || req.files === '') {
 		return res.status(400).json({ error: "please select file" });
 	}
@@ -104,7 +105,8 @@ module.exports.createProduct = async (req, res, next) => {
 	let filenames = []
 	await uploadedFiles.map(file => filenames.push({ productImagePath: file.filename }));
 	let bodyData = req.body;
-	bodyData.productImage = filenames
+	bodyData.productImage = filenames;
+
 	const data = await productCreateService(bodyData);
 	try {
 		if (!data || data.length < 1) {
