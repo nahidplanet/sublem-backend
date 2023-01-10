@@ -7,13 +7,16 @@ module.exports.addWishlistByUser = async (req, res, next) => {
 	try {
 		const userId = req.user.id;
 		const productId = req.body.productId;
+		
 
 
 		const user = await addWishlistByUserService(userId);
+		
 		if (!user || user.length < 1) {
 			return res.status(404).json({ status: false, message: "You are not Login" });
 		} else {
-			const findResult = await User.findOne({ "wishlist.productId": { $in: [productId] } })
+			const findResult = await User.findOne({email:user.email, "wishlist.productId": { $in: [productId] } })
+			
 			if (!findResult) {
 				const result = await User.updateOne({ _id: userId }, { $push: { wishlist: { productId } } });
 
