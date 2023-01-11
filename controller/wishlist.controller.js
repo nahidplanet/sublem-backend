@@ -13,7 +13,7 @@ module.exports.addWishlistByUser = async (req, res, next) => {
 		const user = await addWishlistByUserService(userId);
 		
 		if (!user || user.length < 1) {
-			return res.status(404).json({ status: false, message: "You are not Login" });
+			return res.status(404).json({ status: false, message: "Login Require" });
 		} else {
 			const findResult = await User.findOne({email:user.email, "wishlist.productId": { $in: [productId] } })
 			
@@ -21,7 +21,7 @@ module.exports.addWishlistByUser = async (req, res, next) => {
 				const result = await User.updateOne({ _id: userId }, { $push: { wishlist: { productId } } });
 
 				if (!result || result.length < 1) {
-					return res.status(400).json({ status: false, message: "You are not Login" });
+					return res.status(400).json({ status: false, message: "Login Require" });
 				} else {
 					return res.status(200).json({ status: true, message: "Added wishlist" });
 				}
@@ -47,7 +47,7 @@ module.exports.getAllWishlistByUser = async (req, res, next) => {
 		const result = await getAllWishlistByUserService(userId);
 
 		if (!result || result.length < 1) {
-			return res.status(400).json({ status: false, message: "You are not Login" });
+			return res.status(400).json({ status: false, message: "Login Require" });
 		} else {
 			res.status(200).json({ status: true, wishlist: result });
 
