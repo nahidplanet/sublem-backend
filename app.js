@@ -17,6 +17,7 @@ const addProductFreeRoute = require('./routes/v1/addProductFree.route');
 const sliderRoute = require('./routes/v1/slider.route');
 const socialLinkRoute = require('./routes/v1/socialLink.route');
 const verifyUserRoute = require('./routes/v1/verifyUser.route');
+const adminLoginRoute = require('./routes/v1/adminSignIn.route');
 
 
 app.use(cors());
@@ -39,6 +40,8 @@ app.use("/api/v1/all-users",allUserRoute);
 // user Login
 // ======================================= 
 app.use("/api/v1/create-user",userLoginRoute);
+app.use("/api/v1/developer/admin-login",adminLoginRoute);
+
 
 
 // =======================================
