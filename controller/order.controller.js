@@ -89,6 +89,7 @@ module.exports.createOrder = async (req, res, next) => {
 			const orderItems = cartProduct.cartItems;
 
 			const order = await Order.create({ userId, orderItems });
+			
 			if (!order || order.length < 1) {
 				return res.status(400).json({ status: false, message: "Request failed !" });
 

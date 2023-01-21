@@ -1,11 +1,11 @@
 
 const User = require("../model/user.model");
-const { deleteToCartService, deleteFullCartService, userGetCartService ,getCartForUserDashBoardByEmailService} = require("../service/cart.service")
+const { deleteToCartService, deleteFullCartService, userGetCartService, getCartForUserDashBoardByEmailService } = require("../service/cart.service")
 
 
 // add to cart from single product page and cart page
 module.exports.addToCart = async (req, res, next) => {
- const {productId, price, quantity } = req.body;
+	const { productId, price, quantity } = req.body;
 
 	try {
 		const userId = req.user.id;
@@ -15,7 +15,7 @@ module.exports.addToCart = async (req, res, next) => {
 		} else {
 			const abc = await User.findOne({ "cartItems.productId": { $in: [productId] } })
 			if (!abc) {
-				const result = await User.updateOne({ _id: userId }, { $push: { cartItems: { productId, price, quantity} } })
+				const result = await User.updateOne({ _id: userId }, { $push: { cartItems: { productId, price, quantity } } })
 				return res.status(200).json({ status: true, message: "new Product add" });
 			} else {
 				const increase = await User.updateOne({ "cartItems.productId": { $in: [productId] } }, { $inc: { "cartItems.$.quantity": 1 } })
@@ -28,7 +28,7 @@ module.exports.addToCart = async (req, res, next) => {
 }
 // add to cart  from view single product details
 module.exports.addToCartFromProductDetails = async (req, res, next) => {
- const {productId, price, quantity } = req.body;
+	const { productId, price, quantity } = req.body;
 
 	try {
 		const userId = req.user.id;
@@ -38,9 +38,9 @@ module.exports.addToCartFromProductDetails = async (req, res, next) => {
 		if (!user || user.length < 1) {
 			return res.status(400).json({ status: false, message: "Invalid User", error: "user not find by id" });
 		} else {
-			const result = await User.updateOne({ _id: userId }, { $push: { cartItems: { productId, price, quantity} } })
-			 res.status(200).json({ status: true, message: "Product added" });
-			
+			const result = await User.updateOne({ _id: userId }, { $push: { cartItems: { productId, price, quantity } } })
+			res.status(200).json({ status: true, message: "Product added" });
+
 		}
 	} catch (error) {
 		next(error)
@@ -53,7 +53,7 @@ module.exports.addToCartFromProductDetails = async (req, res, next) => {
 
 // decrement a item from cart 
 module.exports.decrementOneItemFromCart = async (req, res, next) => {
-	
+
 	try {
 		const userId = req.user.id;
 		const cartItems = req.body;
@@ -94,7 +94,7 @@ module.exports.userGetCart = async (req, res, next) => {
 
 // product delete to cart 
 module.exports.deleteToCart = async (req, res, next) => {
-	
+
 	try {
 		const productId = req.params?.productId
 		const userId = req?.user?.id;
